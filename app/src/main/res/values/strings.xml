@@ -2,4 +2,7 @@
     <string name="app_name">card-app</string>
     <string name="name_text">Raí Soares</string>
     <string name="slogan_text">Full Stack Developer</string>
+    <string name="phone_text">(00) 9 9999–9999</string>
+    <string name="email_text">raisoares.dev@gmail.com</string>
+    <string name="github_text">github.com/raiisoares</string>
 </resources>

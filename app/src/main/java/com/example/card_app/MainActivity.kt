@@ -6,11 +6,16 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +42,7 @@ class MainActivity : ComponentActivity() {
                 Color.Transparent.toArgb(), Color.Transparent.toArgb()
             )
         )
+
         setContent {
             BusinessCardTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -45,7 +51,11 @@ class MainActivity : ComponentActivity() {
                             .navigationBarsPadding()
                             .statusBarsPadding()
                     ) {
-                        CardContainer(modifier = Modifier.padding(innerPadding))
+                        CardContainer(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize()
+                        )
                     }
                 }
             }
@@ -55,13 +65,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DeveloperName(name: String, slogan: String, modifier: Modifier = Modifier) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier,
+        verticalArrangement = Arrangement.Center
+    ) {
         Text(
             text = name,
             fontSize = 48.sp,
             lineHeight = 98.sp,
             modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
         )
+
         Text(
             text = slogan,
             fontSize = 28.sp,
@@ -76,19 +90,84 @@ fun BackgroundImage(modifier: Modifier = Modifier) {
     Image(
         painter = image,
         contentDescription = null,
-        modifier = Modifier.padding(60.dp)
+        modifier
     )
 }
 
 @Composable
+fun ContactComponent(modifier: Modifier = Modifier) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .wrapContentWidth()
+            .padding(bottom = 40.dp),
+        verticalArrangement = Arrangement.Bottom,
+    ) {
+        Row(modifier) {
+            Icon(
+                painter = painterResource(R.drawable.email_24dp_e8eaed),
+                contentDescription = null,
+                modifier = Modifier.padding(horizontal = 10.dp)
+            )
+
+            Text(
+                text = stringResource(R.string.email_text),
+                fontSize = 18.sp,
+            )
+        }
+
+        Row(modifier) {
+            Icon(
+                painter = painterResource(R.drawable.call_24dp_e8eaed),
+                contentDescription = null,
+                modifier = Modifier.padding(horizontal = 10.dp)
+            )
+
+            Text(
+                text = stringResource(R.string.phone_text),
+                fontSize = 18.sp,
+            )
+        }
+
+        Row(modifier) {
+            Icon(
+                painter = painterResource(R.drawable.code_24dp_e8eaed),
+                contentDescription = null,
+                modifier = Modifier.padding(horizontal = 10.dp)
+            )
+
+            Text(
+                text = stringResource(R.string.github_text),
+                fontSize = 18.sp,
+            )
+        }
+
+    }
+}
+
+
+@Composable
 fun CardContainer(modifier: Modifier = Modifier) {
-    Column(modifier) {
-        BackgroundImage()
+    Column(
+        modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        BackgroundImage(
+            modifier = Modifier.padding(
+                start = 60.dp,
+                end = 60.dp,
+                top = 30.dp,
+                bottom = 60.dp
+            )
+        )
 
         DeveloperName(
             name = stringResource(R.string.name_text),
-            slogan = stringResource(R.string.slogan_text)
+            slogan = stringResource(R.string.slogan_text),
+            modifier = Modifier.wrapContentSize()
         )
+
+        ContactComponent(modifier = Modifier.padding(8.dp))
     }
 }
 
@@ -96,6 +175,6 @@ fun CardContainer(modifier: Modifier = Modifier) {
 @Composable
 fun BusinessCardPreview() {
     BusinessCardTheme {
-        CardContainer()
+        CardContainer(modifier = Modifier.fillMaxSize())
     }
 }
